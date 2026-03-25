@@ -1,0 +1,23 @@
+The base type includes the common properties and behaviors shared by all locations, such as the name, x, y , distance calculation , type, description , and identifier. These belong in the base class because every location in the system needs them
+
+It should not include properties that belong only to specific types for example delivery details are only related to delivery points, while capacity information belongs only to warehouses so keeping them inside their own classes makes the design more organized
+
+Specialized locations should extend the base type because they are stilllocations, but with addtion featuresa and this will  reduce repetition and  keep the code organized also  allows us to use polymorphism, so one function can work with all location types
+
+
+
+
+1. Why can all location types be stored in one collection?
+Because all of them are types of location since they share the same base class then we can treat them as one group
+2. What problem would happen if the distance behavior did not exist in the base type?
+We wouldn’t be able to sort or compare locations, each type would need its own logic, which makes the code more complicated
+3. Why is the warehouse distance adjustment implemented inside the warehouse type?
+Because this behavior is specific only to warehouses, and keeping it inside the warehouse class will make the design cleaner and keeps each class responsible forits own behavioar
+4. If a new location type is added, what parts of your program will not need modification?
+the main collection, printing function, sorting, and filtering will remain the same as long as the new type extends Location, it will work automatically (like teh other locations)
+
+
+
+
+
+
