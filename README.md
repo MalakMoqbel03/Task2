@@ -24,3 +24,21 @@
 | Queue | enqueue | O(1) | Adds to tail |
 | Queue | dequeue | O(1) | Removes from head |
 | Queue | peek | O(1) | Reads head without removing |
+
+
+## Performance Results
+
+### ArrayList vs LinkedList Comparison
+```
+********* Comparison Table ************
+Add at beginning -> ArrayList: 0.0095 ms,  LinkedList: 0.007542 ms
+Add at end       -> ArrayList: 0.002416 ms, LinkedList: 0.001125 ms
+Search by name   -> ArrayList: 0.141542 ms, LinkedList: 0.25225 ms
+Remove from middle -> ArrayList: 0.005292 ms, LinkedList: 0.006458 ms
+```
+
+### HashMap vs ArrayList Lookup Comparison
+```
+ArrayList total search time: 0.023708 ms
+HashMap total search time:   0.005958 ms
+```
