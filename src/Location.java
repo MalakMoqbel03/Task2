@@ -1,4 +1,4 @@
-public abstract class Location implements filterable {
+public abstract class Location implements Filterable {
     private String name;
     private double x;
     private double y;

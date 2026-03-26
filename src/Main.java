@@ -53,6 +53,8 @@ public class Main {
             System.out.println("13.Show delivery queue");
             System.out.println("14. Search lacation ID");
             System.out.println("15. Compare Arraylist vs Hashmap by ID");
+            System.out.println("16. Show all delivery areas");
+            System.out.println("17. Show locations sorted by distance (TreeMap)");
             System.out.print("Choose an option: ");
             choice = input.nextInt();
             input.nextLine();
@@ -90,9 +92,7 @@ public class Main {
                 case 7:
                     System.out.print("Enter delivery point name: ");
                     String searchName = input.nextLine();
-
-                    Location found = findByName(locations, searchName);
-
+                    Location found = findByName(arrayList, searchName);
                     if (found != null && found instanceof DeliveryPoint) {
                         deliveryHistory.push(found);
                         System.out.println("Visited and added to history: " + found.getName());
@@ -128,7 +128,7 @@ public class Main {
                 case 11:
                     System.out.print("Enter DP name: ");
                     String queueName = input.nextLine();
-                    Location loc = findByName(locations, queueName);
+                    Location loc = findByName(arrayList, queueName);
                     if (loc != null && loc instanceof DeliveryPoint) {
                         deliveryQueue.add((DeliveryPoint) loc);
                         System.out.println("added to queue: " + loc.getName());
@@ -169,6 +169,13 @@ public class Main {
                 case 15:
                     compareIdLookupPerformance(arrayList, locationMap);
                     break;
+                case 16:
+                    showAllDeliveryAreas(arrayList);
+                    demonstrateHashSetDuplicates();
+                    break;
+                case 17:
+                    showLocationsSortedByDistance(arrayList);
+                    break;
                 default:
                     System.out.println("Try again");
             }
@@ -176,6 +183,10 @@ public class Main {
         } while (choice != 6);
         input.close();
     }
+    /*
+     Queue FIFO is the right structure for delivery processing because deliveries should be handled in the order they were received so the first come should be the first served
+      A Stack LIFO would process the most recent delivery first, which is unfair and would leave early requests waiting forever
+     */
 
     public static void printLocationInfo(Location loc) {
         System.out.println(loc.describe());
@@ -405,5 +416,76 @@ public class Main {
         }
         return null;
     }
+    public static void showAllDeliveryAreas(ArrayList<Location> locations) {
+        HashSet<String> uniqueAreas = new HashSet<>();
+        int deliveryPointCount = 0;
+
+        for (Location loc : locations) {
+            if (loc instanceof DeliveryPoint) {
+                DeliveryPoint dp = (DeliveryPoint) loc;
+                deliveryPointCount++;
+                uniqueAreas.add(dp.getDeliveryArea());
+            }
+        }
+
+        System.out.println("\n*** Unique delivery Areas ***");
+        for (String area : uniqueAreas) {
+            System.out.println(area);
+        }
+
+        System.out.println("\nTotal DeliveryPoints: " + deliveryPointCount);
+        System.out.println("Total Unique Areas: " + uniqueAreas.size());
+    }
+
+    public static void demonstrateHashSetDuplicates() {
+        HashSet<String> areas = new HashSet<>();
+
+        areas.add("Ramallah");
+        areas.add("Nablus");
+        areas.add("Ramallah");
+        areas.add("Hebron");
+        areas.add("Nablus");
+
+        System.out.println("\n*** HashSet duplicate ***");
+        System.out.println("Areas in HashSet: " + areas);
+        System.out.println("Size: " + areas.size());
+    }
+    /*
+     * HashSet ignores duplicates because it stores unique values only
+     * Internally, it uses hashing. When we add an element, Java computes its hash value and checks whether an equal element is already exists
+     * If the same value is already in the set, the duplicate is not added
+     * This makes HashSet very efficient for unique values checking
+     */
+
+    public static TreeMap<Double, List<Location>> buildDistanceTreeMap(ArrayList<Location> locations, Location headquarters) {
+        TreeMap<Double, List<Location>> distanceMap = new TreeMap<>();
+        for (Location loc : locations) {
+            double distance = loc.distanceTo(headquarters);
+            distanceMap.putIfAbsent(distance, new ArrayList<>());
+            distanceMap.get(distance).add(loc);
+        }
+        return distanceMap;
+    }
+    public static void showLocationsSortedByDistance(ArrayList<Location> locations) {
+        Location headquarters = new GeneralLocation("Headquarters", 0, 0, "HQ");
+        TreeMap<Double, List<Location>> distanceMap = buildDistanceTreeMap(locations, headquarters);
+        System.out.println("\n*** Locations sorted by distance ***");
+        for (Map.Entry<Double, List<Location>> entry : distanceMap.entrySet()) {
+            double distance = entry.getKey();
+            List<Location> sameDistanceLocations = entry.getValue();
+            for (Location loc : sameDistanceLocations) {
+                System.out.println("Distance: " + distance + " = " + loc.describe());
+            }
+        }
+    }
+    /*
+     TreeMap stores keys in sorted order automatically
+     This is different from manual sorting in the OOP task because here the map keeps the elements ordered while inserting them, instead ofcollecting them first and then sorting later
+     Insertion in TreeMap is O(log n) because it is implemented using a balanced tree
+     Sorting an ArrayList usually takes O(n log n).
+
+      If two locations have the same distance, TreeMap<Double, Location> will overwrite one of them because keys must be unique
+      To fix this, we use TreeMap<Double, List<Location>> so we can store more than one location under the same distance instead of losing data
+     */
 
 }

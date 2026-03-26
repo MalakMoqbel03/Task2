@@ -1,4 +1,4 @@
-public class GeneralLocation extends Location implements filterable{
+public class GeneralLocation extends Location {
 
     public GeneralLocation(String name, double x, double y, String id) {
         super(name, x, y, id);

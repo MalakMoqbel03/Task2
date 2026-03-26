@@ -1,3 +1,3 @@
-public interface filterable {
+public interface Filterable {
     boolean matches(String filterType);
 }
