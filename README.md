@@ -1,13 +1,26 @@
-ArrayList	add O(1), get by index O(1), search O(n), remove O(n)
 
-LinkedList	add first O(1), add last O(1,) search O(n), remove	O(n)
-
-HashMap	put, get, containsKey	O(1)
-
-HashSet	add, contains	O(1)
-
-TreeMap	put, get, iteration order O(log n)
-
-Stack	push, pop, peek	O(1)
-
-Queue	enqueue, dequeue, peek	O(1)
+| Data Structure | Operation | Big-O | Why |
+|---|---|---|---|
+| ArrayList | add at end | O(1) amortized | Appends to end of array |
+| ArrayList | add at beginning | O(n) | Shifts all elements right |
+| ArrayList | get by index | O(1) | Direct index access |
+| ArrayList | search by name | O(n) | Must scan each element |
+| ArrayList | remove middle | O(n) | Shifts elements after removal |
+| LinkedList | add first | O(1) | Just updates head pointer |
+| LinkedList | add last | O(1) | Just updates tail pointer |
+| LinkedList | search | O(n) | Must traverse node by node |
+| LinkedList | remove | O(n) | Must find the node first |
+| HashMap | put | O(1) avg | Hashes key directly to bucket |
+| HashMap | get | O(1) avg | Hashes key to find value |
+| HashMap | containsKey | O(1) avg | Same as get |
+| HashSet | add | O(1) avg | Hashes value to check/insert |
+| HashSet | contains | O(1) avg | Hashes value to find bucket |
+| TreeMap | put | O(log n) | Balanced tree insertion |
+| TreeMap | get | O(log n) | Balanced tree traversal |
+| TreeMap | iteration | O(n) | Visits every node in order |
+| Stack | push | O(1) | Adds to top |
+| Stack | pop | O(1) | Removes from top |
+| Stack | peek | O(1) | Reads top without removing |
+| Queue | enqueue | O(1) | Adds to tail |
+| Queue | dequeue | O(1) | Removes from head |
+| Queue | peek | O(1) | Reads head without removing |
