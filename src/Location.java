@@ -1,4 +1,4 @@
-public abstract class Location {
+public abstract class Location implements filterable {
     private String name;
     private double x;
     private double y;
@@ -43,5 +43,9 @@ public abstract class Location {
         double dx = this.x - other.x;
         double dy = this.y - other.y;
         return Math.sqrt(dx * dx + dy * dy);
+    }
+    @Override
+    public boolean matches(String filterType) {
+        return false;
     }
 }

@@ -26,6 +26,12 @@ public class DeliveryPoint extends Location {
 
     @Override
     public String describe() {
-        return "id: " + getId() + ", type: " + getType() + ", name: " + getName() + ", X-axis: " + getX() + ", Y-axis:  " + getY() +   ", delivery Area: " + deliveryArea + ", priority level: " + priorityLevel;
+        return "id: " + getId() + ", type: " + getType() + ", name: " + getName() + ", X-axis: " + getX() + ", Y-axis: " + getY() + ", delivery area: " + deliveryArea + ", priority level: " + priorityLevel;
+    }
+
+    @Override
+    public boolean matches(String filterType) {
+        return filterType.equalsIgnoreCase("high")
+                && priorityLevel.equalsIgnoreCase("High");
     }
 }

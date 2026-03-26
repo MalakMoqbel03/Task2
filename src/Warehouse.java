@@ -1,13 +1,12 @@
 public class Warehouse extends Location {
     private int maxCapacity;
     private int currentLoad;
-    private String warehouseId;
 
-    public Warehouse(String name, double x, double y, String id, int maxCapacity, int currentLoad, String warehouseId) {
+
+    public Warehouse(String name, double x, double y, String id, int maxCapacity, int currentLoad ) {
         super(name, x, y, id);
         this.maxCapacity = maxCapacity;
         this.currentLoad = currentLoad;
-        this.warehouseId = warehouseId;
     }
     public int getMaxCapacity() {
         return maxCapacity;
@@ -15,23 +14,14 @@ public class Warehouse extends Location {
     public int getCurrentLoad() {
         return currentLoad;
     }
-    public String getWarehouseId() {
-        return warehouseId;
-    }
+
     public void setMaxCapacity(int maxCapacity) {
         this.maxCapacity = maxCapacity;
     }
     public void setCurrentLoad(int currentLoad) {
         this.currentLoad = currentLoad;
     }
-    public void setWarehouseId(String warehouseId) {
-        this.warehouseId = warehouseId;
-    }
 
-    @Override
-    public String getId() {
-        return warehouseId;
-    }
 
     @Override
     public String getType() {
@@ -50,5 +40,8 @@ public class Warehouse extends Location {
 
     public boolean hasSpace() {
         return currentLoad < maxCapacity;
+    }
+    public boolean matches(String filterType) {
+        return filterType.equalsIgnoreCase("space") && hasSpace();
     }
 }
